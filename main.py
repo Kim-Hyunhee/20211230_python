@@ -4,9 +4,16 @@
 
 from phone_book import print_main_menu, sign_up, sign_in
 
-menu_num = print_main_menu()
 
-if menu_num == 2:
-    sign_up()
-elif menu_num == 1:
-    sign_in()
+# 프로그램이 종료될 사유가 생길 때까지 무한 반복 => while True
+
+while True:
+    menu_num = print_main_menu()
+
+    if menu_num == 2:
+        sign_up()
+    elif menu_num == 1:
+        sign_in()
+    elif menu_num == 0:
+        print('프로그램을 종료합니다.')
+        break
