@@ -9,7 +9,8 @@ db_connect = pymysql.connect(
     user = 'admin', 
     passwd = 'Vmfhwprxm!123', 
     db ='test_phone_book', 
-    charset = 'utf8')
+    charset = 'utf8',
+    cursorclass = pymysql.cursors.DictCursor)  # SELECT의 결과를 tuple이 아닌 list형태로 가져오도록
 
 
 # 쿼리를 날려주는 역할
@@ -75,11 +76,11 @@ def sign_in():
         # user_list => 0번째 아이템 : 로그인에 성공한 사람 정보
         
         login_user = user_list[0]  # 최소한 0번 째는 있을 것이다. (전제)
-        print(login_user)   # 로그인 사용자 정보 => 모든 항목들을 tuple로 묶어서 들고있다.
-        user_nickname = login_user[3]  # 사용자 정보 tuple에서 닉네임을 추출
+        print(login_user)   # 로그인 사용자 정보 => 모든 항목들을 dict로 묶어서 들고있다.
+        user_nickname = login_user['nickname']  # 사용자 정보 tuple에서 닉네임을 추출
         
         global login_user_id  # 최상단에서 만든 login_user_id  변수를 끌어와서 사용하겠다고 명시
-        login_user_id = login_user[0]  # 로그인한 사용자(내가) 몇 번 id를 가지고 있는 지 추출
+        login_user_id = login_user['id']  # 로그인한 사용자(내가) 몇 번 id를 가지고 있는 지 추출
         
         print(f'{user_nickname}님, 환영합니다!')  # 로그인에 성공한 사람의 닉네임이 뭔지?
         sleep(2)
@@ -134,9 +135,9 @@ def show_all_contacts():
     # 3. 목록을 돌면서 이름/폰번/메모 => 조경진(메모사항) : 010-5112-3237 양식으로 가공
     for contact in contacts_list:
         # print(contact)
-        name = contact[2]
-        phone_num = contact[3]
-        memo = contact[4]
+        name = contact['name']
+        phone_num = contact['phone_num']
+        memo = contact['memo']
         
         contact_str = f'{name}({memo}) : {phone_num}'
         print(contact_str)
