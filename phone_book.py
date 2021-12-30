@@ -74,7 +74,7 @@ def sign_in():
         # 아이디 / 비번 일치 회원 발견 => 성공
         # user_list => 0번째 아이템 : 로그인에 성공한 사람 정보
         
-        login_user = user_list[0]  # 최소함 0번 째는 있을 것이다. (전제)
+        login_user = user_list[0]  # 최소한 0번 째는 있을 것이다. (전제)
         print(login_user)   # 로그인 사용자 정보 => 모든 항목들을 tuple로 묶어서 들고있다.
         user_nickname = login_user[3]  # 사용자 정보 tuple에서 닉네임을 추출
         
@@ -116,4 +116,28 @@ def add_phone_num():
     # 4. 안내 메시지 2초간 출력 ('연락처 등록이 완료 되었습니다.')
     
     print('연락처 등록이 완료되었습니다.')
+    sleep(2)
+    
+
+# 로그인한 사용자가 등록한 모든 폰번 출력
+def show_all_contacts():
+    # login_user_id만 갖고 있으면 => 내가 가진 연락처 목록 조회 가능
+    # 추가 input 필요 없다.
+    
+    # 1. SQL 작성 - 내 연락처 목록
+    sql = f"SELECT * FROM contacts WHERE contacts.user_id = {login_user_id}"
+    
+    # 2. cursor => 쿼리 실행 / 실행 결과를 별도의 tuple에 담자
+    cursor.execute(sql)
+    contacts_list = cursor.fetchall()
+    
+    # 3. 목록을 돌면서 이름/폰번/메모 => 조경진(메모사항) : 010-5112-3237 양식으로 가공
+    for contact in contacts_list:
+        # print(contact)
+        name = contact[2]
+        phone_num = contact[3]
+        memo = contact[4]
+        
+        contact_str = f'{name}({memo}) : {phone_num}'
+        print(contact_str)
     sleep(2)
