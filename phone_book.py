@@ -1,4 +1,5 @@
 import pymysql
+from time import sleep
 # DB 연결 자체는 main.py에서 설정
 # 만들어진 연결 정보를 받아서 사용해보자
 
@@ -40,4 +41,8 @@ def sign_up ():
     sql = f"INSERT INTO users (users.email, users.password, users.nickname) VALUES ('{input_email}', '{input_password}', '{input_nickname}')"
     
     cursor.execute(sql)
-    db_connect.commit()
+    db_connect.commit()  # 실제 DB에 요청하는 일
+    
+    print('회원 가입이 완료 되었습니다. 메인 화면으로 돌아갑니다.')
+    sleep(2)
+    
