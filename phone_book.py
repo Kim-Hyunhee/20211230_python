@@ -164,9 +164,14 @@ def search_my_contact_list():
         sleep(2)
         
     else:
-        # 검색 결과 확인
-        for row in result :
-            print(row)  # 각각의 한 줄은 dict 형태로 받아옴
-
-        sleep(2)
+        
+        print('==== 검색 결과 ====')
+                
+        # 검색 결과 확인 => 1. 이름 (메모)  ...  4.이름4 (메모4)
+        for index, row in enumerate(result) :  # 반복시 enumerate함수 사용 => 몇 번째 줄 + 어떤 데이터 동시 추출
+            line = f"{index+1}. {row['name']} ({row['memo']})"
+            print(line)
+            
+        # 몇 번 연락처를 상세보기 할 것인지?
+        contact_num = int(input('상세보기 연락처 선택 : '))
         
