@@ -15,6 +15,9 @@ db_connect = pymysql.connect(
 # 쿼리를 날려주는 역할
 cursor = db_connect.cursor()
 
+# 로그인한 사용자가 몇 번 사용자인지 변수로 저장
+login_user_id = 0  # 임시로 0으로 초기화
+
 
 def print_main_menu():
     print('===== 전화번호부 =====')
@@ -72,8 +75,11 @@ def sign_in():
         # user_list => 0번째 아이템 : 로그인에 성공한 사람 정보
         
         login_user = user_list[0]  # 최소함 0번 째는 있을 것이다. (전제)
-        # print(login_user)   # 로그인 사용자 정보 => 모든 항목들을 tuple로 묶어서 들고있다.
+        print(login_user)   # 로그인 사용자 정보 => 모든 항목들을 tuple로 묶어서 들고있다.
         user_nickname = login_user[3]  # 사용자 정보 tuple에서 닉네임을 추출
+        
+        global login_user_id  # 최상단에서 만든 login_user_id  변수를 끌어와서 사용하겠다고 명시
+        login_user_id = login_user[0]  # 로그인한 사용자(내가) 몇 번 id를 가지고 있는 지 추출
         
         print(f'{user_nickname}님, 환영합니다!')  # 로그인에 성공한 사람의 닉네임이 뭔지?
         sleep(2)
@@ -99,8 +105,9 @@ def add_phone_num():
     input_phone_num = input('전화번호 : ')
     input_memo = input('메모사항 : ')
     
+    print('로그인한 사용자 아이디 : ', login_user_id)
     # 2. SQL 작성 -> INSERT INTO로 데이터 추가 => user_id=12 처럼 DB의 본인 숫자를 찾아서 하드코딩으로 INSERT
-    sql = f"INSERT INTO contacts (contacts.name, contacts.phone_num, contacts.memo, contacts.user_id) VALUES ('{input_name}', '{input_phone_num}','{input_memo}', 2)"
+    sql = f"INSERT INTO contacts (contacts.name, contacts.phone_num, contacts.memo, contacts.user_id) VALUES ('{input_name}', '{input_phone_num}','{input_memo}', {login_user_id})"
 
     # 3. cursor / db_connect를 이용, 실제 DB에 쿼리 수행
     cursor.execute(sql)
