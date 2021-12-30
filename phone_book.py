@@ -1,5 +1,7 @@
 import pymysql
 from time import sleep
+from datas import Contact
+
 # DB 연결 자체는 main.py에서 설정
 # 만들어진 연결 정보를 받아서 사용해보자
 
@@ -175,3 +177,5 @@ def search_my_contact_list():
         # 몇 번 연락처를 상세보기 할 것인지?
         contact_num = int(input('상세보기 연락처 선택 : '))
         
+        # contact_num에 맞는 line을 가지고 => dict을 가지고, Contact 형태의 객체로 변환 (클래스 활용)
+        contact = Contact()  # 임시로 기본값만 가지고 있는 연락처 생성
