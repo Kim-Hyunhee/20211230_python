@@ -3,7 +3,7 @@
 # DB 연결 => 기타 기능 : phone_book.py 모듈 이용
 
 from time import sleep
-from phone_book import add_phone_num, print_main_menu, show_all_contacts, sign_up, sign_in, print_phone_book_menu
+from phone_book import add_phone_num, print_main_menu, search_my_contact_list, show_all_contacts, sign_up, sign_in, print_phone_book_menu
 
 
 # 프로그램이 종료될 사유가 생길 때까지 무한 반복 => while True
@@ -26,8 +26,10 @@ while True:
                     break
                 elif num == 1:
                     add_phone_num()
-                elif num ==2:
+                elif num == 2:
                     show_all_contacts()
+                elif num == 3:
+                    search_my_contact_list()
         
     elif menu_num == 0:
         print('프로그램을 종료합니다.')
